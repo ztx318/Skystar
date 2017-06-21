@@ -16,8 +16,8 @@ public class LeadActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lead);
         lead_image = (ImageView) findViewById(R.id.image_lead);
-        Animation animation = new AlphaAnimation(1.0f, 0.1f);
-        animation.setDuration(4000);
+        Animation animation = new AlphaAnimation(0.1f, 1.0f);
+        animation.setDuration(3000);
         lead_image.setAnimation(animation);
         lead_image.startAnimation(animation);
         animation.setAnimationListener(new Animation.AnimationListener() {

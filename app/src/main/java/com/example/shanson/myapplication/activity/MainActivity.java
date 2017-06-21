@@ -1,12 +1,15 @@
 package com.example.shanson.myapplication.activity;
 
 
+import android.content.DialogInterface;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.NumberPicker;
@@ -37,6 +40,12 @@ public class MainActivity extends BaseActivity {
     private NumberPicker number;
     private TextView text_weight;
     private int weight;
+    private TextView text_privi;
+    private TextView cancle;
+    private AlertDialog dialog;
+    private EditText phonenumber;
+    private Button sendpwd;
+    private LinearLayout custom_dialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,7 +60,9 @@ public class MainActivity extends BaseActivity {
         wp_go = (LinearLayout) findViewById(R.id.wp_go);
         wp_weight = (RelativeLayout) findViewById(R.id.wp_weight);
         text_weight = (TextView) findViewById(R.id.text_weight);
+        text_privi = (TextView) findViewById(R.id.text_privilege);
 
+        text_privi.setOnClickListener(new MyListener());
         wp_weight.setOnClickListener(new MyListener());
         wp_go.setOnClickListener(new MyListener());
         wp_come.setOnClickListener(new MyListener());
@@ -93,9 +104,46 @@ public class MainActivity extends BaseActivity {
                 case R.id.btn_command:
                     popupWindow.dismiss();
                     text_weight.setText("" + weight + "公斤");
+                case R.id.wp_time:
+                initPopWindow();
+
+
+
+                    break;
+                case R.id.text_privilege:
+                    initDialog();
+                    break;
+                case R.id.text_cancle:
+                    dialog.dismiss();
+                    break;
+                case R.id.send_check:
+                    // TODO: 2017/6/21
+                    sendpwd.setBackgroundColor(getResources().getColor(android.R.color.holo_blue_dark));
+
+                    break;
+
             }
 
         }
+
+    }
+
+    private void initPopWindow() {
+
+
+    }
+
+    private void initDialog() {
+        custom_dialog = (LinearLayout) LayoutInflater.from(MainActivity.this).inflate(R.layout.custom_dialog, null);
+        dialog = new AlertDialog.Builder(this).setView(custom_dialog).create();
+        dialog.show();
+        cancle = custom_dialog.findViewById(R.id.text_cancle);
+        phonenumber = custom_dialog.findViewById(R.id.edit_phonenub);
+        sendpwd = custom_dialog.findViewById(R.id.send_check);
+        sendpwd.setOnClickListener(new MyListener());
+        phonenumber.setOnClickListener(new MyListener());
+        cancle.setOnClickListener(new MyListener());
+
 
     }
 
@@ -113,6 +161,7 @@ public class MainActivity extends BaseActivity {
         number.setMinValue(5);
         number.setValue(weight);
         number.setMaxValue(10000);
+        number.setWrapSelectorWheel(false);
 
         number.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
             @Override
@@ -127,10 +176,10 @@ public class MainActivity extends BaseActivity {
         btn_cancle = (Button) contentView.findViewById(R.id.btn_cancle);
         btn_command = (Button) contentView.findViewById(R.id.btn_command);
         number_price = contentView.findViewById(R.id.number_price);
+
         btn_cancle.setOnClickListener(new MyListener());
         btn_command.setOnClickListener(new MyListener());
         number_price.setOnClickListener(new MyListener());
-
 
         //显示popupwindow
         View rootview = LayoutInflater.from(MainActivity.this).inflate(R.layout.activity_main, null);
