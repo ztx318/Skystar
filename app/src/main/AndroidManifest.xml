@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.example.shanson.myapplication">
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/map1"
+        android:label="快易帮"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <activity android:name=".activity.MainActivity"></activity>
+        <activity android:name=".activity.LeadActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".activity.GoAddress"></activity>
+        <activity android:name=".activity.MapActivity"></activity>
+        <activity android:name=".activity.LoginActivity"></activity>
+        <activity android:name=".activity.SkipActivity"></activity>
+        <activity android:name=".activity.ResetActivity"></activity>
+        <activity android:name=".activity.LoginActivity1"></activity>
+        <activity android:name=".activity.ComeAddressActivity"></activity>
+        <activity android:name=".activity.WpTypeActivity"></activity>
+    </application>
+
+</manifest>
