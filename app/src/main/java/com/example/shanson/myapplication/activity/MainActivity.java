@@ -61,6 +61,13 @@ public class MainActivity extends BaseActivity {
     private int minute;
     private Button btn_command2;
     private Button btn_cancle2;
+    private TextView text_plus;
+    private PopupWindow popupPlusWindow;
+    private NumberPicker numberplus;
+    private int price_plus;
+    private Button btn_command3;
+    private Button btn_cancle3;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,6 +85,7 @@ public class MainActivity extends BaseActivity {
         text_privi = (TextView) findViewById(R.id.text_privilege);
         wp_gettime = (RelativeLayout) findViewById(R.id.wp_gettime);
         gettime_wp = (TextView) findViewById(R.id.gettime_wp);
+        text_plus = (TextView) findViewById(R.id.text_plus);
 
         gettime_wp.setOnClickListener(new MyListener());
         text_privi.setOnClickListener(new MyListener());
@@ -86,6 +94,7 @@ public class MainActivity extends BaseActivity {
         wp_come.setOnClickListener(new MyListener());
         wp_type.setOnClickListener(new MyListener());
         wp_gettime.setOnClickListener(new MyListener());
+        text_plus.setOnClickListener(new MyListener());
     }
 
     private View.OnClickListener clickListener =
@@ -123,6 +132,7 @@ public class MainActivity extends BaseActivity {
                 case R.id.btn_command:
                     popupWindow.dismiss();
                     text_weight.setText("" + weight + "公斤");
+
                     break;
                 case R.id.text_privilege:
                     initDialog();
@@ -139,17 +149,62 @@ public class MainActivity extends BaseActivity {
 
                     break;
                 case R.id.btn_command2:
-                    showDate();
+                    gettime_wp.setText("" + year + "年" + (month + 1) + "月" + day + "号" + hour + "时" + minute + "分");
+                    popupDatePicWindow.dismiss();
                     break;
                 case R.id.btn_cancle2:
                     popupDatePicWindow.dismiss();
                     gettime_wp.setText("立即取件");
+                    break;
+                case R.id.text_plus:
+                    initPopwinPlus();
+                    break;
+                case R.id.btn_command3:
+                    text_plus.setText("加价"+price_plus+"元");
+                    popupPlusWindow.dismiss();
+                    break;
+                case R.id.btn_cancle3:
+                    popupPlusWindow.dismiss();
+                    text_plus.setText("我要加价(>20公斤)");
                     break;
 
             }
 
         }
 
+    }
+
+    private void initPopwinPlus() {
+        //设置contentView
+        View contentView = LayoutInflater.from(MainActivity.this).inflate(R.layout.popwin_plus, null);
+        popupPlusWindow = new PopupWindow(contentView,
+                ViewPager.LayoutParams.MATCH_PARENT, ViewPager.LayoutParams.WRAP_CONTENT);
+
+        popupPlusWindow.setContentView(contentView);
+        popupPlusWindow.setFocusable(true); // 设置PopupWindow可获得焦点
+        popupPlusWindow.setTouchable(true); // 设置PopupWindow可触摸
+
+        numberplus = contentView.findViewById(R.id.number_plus);
+        btn_command3 = contentView.findViewById(R.id.btn_command3);
+        btn_cancle3 = contentView.findViewById(R.id.btn_cancle3);
+
+        numberplus.setMinValue(5);
+        numberplus.setMaxValue(10000);
+        numberplus.setWrapSelectorWheel(false);
+
+        numberplus.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
+            @Override
+            public void onValueChange(NumberPicker numberPicker, int i, int newval) {
+                price_plus = newval;
+
+            }
+        });
+
+        btn_command3.setOnClickListener(new MyListener());
+        btn_cancle3.setOnClickListener(new MyListener());
+//显示popupwindow
+        View rootview = LayoutInflater.from(MainActivity.this).inflate(R.layout.activity_main, null);
+        popupPlusWindow.showAtLocation(rootview, Gravity.BOTTOM, 0, 0);
     }
 
     private void initDateWindow() {
@@ -174,31 +229,39 @@ public class MainActivity extends BaseActivity {
         year = c.get(Calendar.YEAR);
         month = c.get(Calendar.MONTH);
         day = c.get(Calendar.DAY_OF_MONTH);
-        year = c.get(Calendar.YEAR);
+        minute = c.get(Calendar.MINUTE);
 
         //初始化组件
         date_picker.init(year, month, day, new DatePicker.OnDateChangedListener() {
             @Override
             public void onDateChanged(DatePicker datePicker, int i, int i1, int i2) {
-                MainActivity.this.year = year;
-                MainActivity.this.month = month;
-                MainActivity.this.day = day;
+                MainActivity.this.year = i;
+                MainActivity.this.month = i1;
+                MainActivity.this.day = i2;
+                showDate(year, month, day, hour, minute);
             }
         });
 
         time_picker.setOnTimeChangedListener(new TimePicker.OnTimeChangedListener() {
             @Override
             public void onTimeChanged(TimePicker timePicker, int i, int i1) {
-                MainActivity.this.hour=hour;
-                MainActivity.this.minute=minute;
+                MainActivity.this.hour = i;
+                MainActivity.this.minute = i1;
+                showDate(year, month, day, hour, minute);
             }
         });
+
+
+        //显示popupwindow
+        View rootview = LayoutInflater.from(MainActivity.this).inflate(R.layout.activity_main, null);
+        popupDatePicWindow.showAtLocation(rootview, Gravity.BOTTOM, 0, 0);
 
     }
 
     //
-    private void showDate() {
-        gettime_wp.setText(""+month+"月"+day+"号"+hour+"时"+minute+"分");
+    private void showDate(int year, int month, int day, int hour, int minute) {
+
+        gettime_wp.setText("" + year + "年" + (month + 1) + "月" + day + "号" + hour + "时" + minute + "分");
 
     }
 
@@ -213,18 +276,18 @@ public class MainActivity extends BaseActivity {
         popupWindow.setTouchable(true); // 设置PopupWindow可触摸
         number = (NumberPicker) contentView.findViewById(R.id.number);
         number.setMinValue(5);
-        number.setValue(weight);
-        number.setMaxValue(10000);
+        number.setMaxValue(20);
         number.setWrapSelectorWheel(false);
 
         number.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
             @Override
-            public void onValueChange(NumberPicker numberPicker, int i, int newval) {
+            public void onValueChange(NumberPicker numberPicker, int oldval, int newval) {
                 number_price.setText("" + (newval - 5) * 2);
                 weight = newval;
 
             }
         });
+
 
         //点击事件
         btn_cancle = (Button) contentView.findViewById(R.id.btn_cancle);

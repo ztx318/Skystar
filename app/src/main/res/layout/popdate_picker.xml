@@ -43,26 +43,24 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="20dp"
-        android:orientation="horizontal">
+        android:orientation="vertical">
 
         <DatePicker
-            android:layout_gravity="center_horizontal"
             android:id="@+id/date_picker"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
             android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
             android:layout_weight="1"
-            android:calendarViewShown="true"
-            android:datePickerMode="calendar"
-            android:spinnersShown="true"
-            android:startYear="2016"
-            android:endYear="2017"/>
+            android:startYear="2017"
+            android:endYear="2030"/>
 
         <TimePicker
             android:layout_marginRight="10dp"
             android:id="@+id/time_picker"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
             android:layout_marginLeft="10dp"
             android:layout_weight="1"/>
 
