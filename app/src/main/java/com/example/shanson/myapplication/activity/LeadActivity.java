@@ -23,12 +23,14 @@ public class LeadActivity extends BaseActivity {
         animation.setAnimationListener(new Animation.AnimationListener() {
             @Override
             public void onAnimationStart(Animation animation) {
+                startActivity(LoginActivity.class);
 
             }
 
             @Override
             public void onAnimationEnd(Animation animation) {
-                             skip();
+
+                skip();
             }
 
 

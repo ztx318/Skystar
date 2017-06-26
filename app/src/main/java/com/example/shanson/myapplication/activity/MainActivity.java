@@ -18,9 +18,9 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
+import com.example.shanson.myapplication.R;
 import com.example.shanson.myapplication.base.BaseActivity;
 import com.example.shanson.myapplication.base.adapter.MyAdapter;
-import com.example.shanson.myapplication.R;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -28,6 +28,7 @@ import java.util.List;
 
 
 public class MainActivity extends BaseActivity {
+
 
     private List<View> viewList = new ArrayList<View>();
     public ViewPager viewPager;
@@ -69,12 +70,13 @@ public class MainActivity extends BaseActivity {
     private Button btn_cancle3;
 
 
-    @Override
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        initActionBar("绅蓝", R.mipmap.dd, null, clickListener);
+
+        initActionBar("绅蓝", R.mipmap.dd, "登录/注册", clickListener);
         initPagerData();
 
         wp_come = (LinearLayout) findViewById(R.id.wp_gocome);
@@ -97,13 +99,17 @@ public class MainActivity extends BaseActivity {
         text_plus.setOnClickListener(new MyListener());
     }
 
+
     private View.OnClickListener clickListener =
             new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     switch (view.getId()) {
-                        case R.id.iv_left:
+                        case R.id.iv_right:
                             startActivity(LoginActivity.class);
+                            break;
+                        case R.id.iv_left:
+
                             break;
                     }
                 }
@@ -324,19 +330,20 @@ public class MainActivity extends BaseActivity {
         viewPager.setCurrentItem(Integer.MAX_VALUE / 2);
         ImageView imageView = null;
         imageView = (ImageView) getLayoutInflater().inflate(R.layout.viewpager_list_item, null);
-        imageView.setImageResource(R.mipmap.a);
+        imageView.setImageResource(android.R.drawable.btn_star);
         viewList.add(imageView);
         imageView = (ImageView) getLayoutInflater().inflate(R.layout.viewpager_list_item, null);
-        imageView.setImageResource(R.mipmap.b);
+        imageView.setImageResource(android.R.drawable.btn_star);
         viewList.add(imageView);
         imageView = (ImageView) getLayoutInflater().inflate(R.layout.viewpager_list_item, null);
-        imageView.setImageResource(R.mipmap.c);
+        imageView.setImageResource(android.R.drawable.btn_star);
         viewList.add(imageView);
         imageView = (ImageView) getLayoutInflater().inflate(R.layout.viewpager_list_item, null);
-        imageView.setImageResource(R.mipmap.d);
+        imageView.setImageResource(android.R.drawable.btn_star);
         viewList.add(imageView);
 
     }
+
 
 
 }
